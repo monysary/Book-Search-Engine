@@ -13,6 +13,7 @@ const resolvers = {
     },
 
     Mutation: {
+        // Login route
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
             if (!user) {
@@ -28,12 +29,14 @@ const resolvers = {
             return { token, user };
         },
 
+        // Add new user route
         addUser: async (parent, args) => {
             const user = await User.create(args);
             const token = signToken(user);
             return { token, user }
         },
 
+        // Add book to user route
         savedBook: async (parent, { bookData }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('You are not logged in!')
@@ -48,6 +51,7 @@ const resolvers = {
             return addBook;
         },
 
+        // Delete book from user route
         removeBook: async (parent, { bookId }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('You are not logged in!')
