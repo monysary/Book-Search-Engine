@@ -42,13 +42,13 @@ const resolvers = {
                 throw new AuthenticationError('You are not logged in!')
             }
 
-            const addBook = await User.findByIdAndUpdate(
+            const userData = await User.findByIdAndUpdate(
                 { _id: context.user._id },
                 { $push: { savedBooks: bookData } },
                 { new: true }
             )
 
-            return addBook;
+            return userData;
         },
 
         // Delete book from user route
@@ -57,13 +57,13 @@ const resolvers = {
                 throw new AuthenticationError('You are not logged in!')
             }
 
-            const deleteBook = await User.findByIdAndUpdate(
+            const userData = await User.findByIdAndUpdate(
                 { _id: context.user._id },
                 { $pull: { savedBooks: { bookId: bookId } } },
                 { new: true }
             )
 
-            return deleteBook;
+            return userData;
         }
     }
 }
